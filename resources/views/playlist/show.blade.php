@@ -33,7 +33,8 @@
                 </tbody>
             </table>
         @else
-            No tracks found for Playlist {{$playlist->id}} 
+            <a href="{{route('playlist.index')}}" class="d-block mb-3">Back to Playlists</a>
+            <p>No tracks found for Playlist {{$playlist->id}} </p>
         @endif 
         
     @endsection
