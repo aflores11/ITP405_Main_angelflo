@@ -20,8 +20,12 @@ class PlaylistController extends Controller
     }
 
     public function show($id){
-        $playlist = DB::table('playlist')
+        $playlist = DB::table('playlists')
         ->where('id','=',$id)
+        ->get([
+            'playlists.name',
+            'playlists.id'
+        ])
         ->first();
 
         $playlistDetails = DB::table('playlists')
