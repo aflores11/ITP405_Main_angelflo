@@ -39,6 +39,7 @@
     @endsection
 @else
     @section('title')
-        Playlist Does Not Exist.   
+        Playlist Does Not Exist.  
+        <a href="{{route('playlist.index')}}" class="d-block mb-3">Back to Playlists</a> 
     @endsection
 @endif
