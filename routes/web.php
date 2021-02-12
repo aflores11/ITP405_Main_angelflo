@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/playlists', [InvoiceController::class, 'index'])->name('playlist.index');
+Route::get('/playlists/{id}', [InvoiceController::class, 'show'])->name('playlist.show');
