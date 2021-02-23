@@ -3,6 +3,7 @@
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+if (env('APP_ENV') !== 'local') {
+    URL::forceScheme('https');
+}
 
 Route::get('/playlists', [PlaylistController::class, 'index'])->name('playlist.index');
 Route::get('/playlists/{id}', [PlaylistController::class, 'show'])->name('playlist.show');
