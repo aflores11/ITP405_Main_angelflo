@@ -9,6 +9,7 @@ class PlaylistController extends Controller
 {
     public function index(){
         $playlists = DB::table('playlists')
+        ->orderBy('id')
         ->get([
             'playlists.id',
             'playlists.name'
@@ -48,4 +49,26 @@ class PlaylistController extends Controller
             'playlistDetails' => $playlistDetails
         ]);
     }
+    public function edit($id){
+
+        $playlist = DB::table('playlists')->where('id', '=', $id)->first();
+
+        return view('playlist.edit', [
+            'playlist' => $playlist
+        ]);
+    }
+
+    public function update($id, Request $request){
+        $request->validate([
+            'title' => 'required|max:30|unique:playlists,name',
+        ]);
+
+        DB::table("playlists")->where('id' , '=' , $id)->update([
+            'name' => $request->input('title'),
+        ]);
+
+        return redirect()->route('playlist.index', ['id'=>$id])
+        ->with('success', "{$request->input('oldName')} was successfully renamed to {$request->input('title')}" );
+    }
+
 }

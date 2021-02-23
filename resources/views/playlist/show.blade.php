@@ -6,9 +6,11 @@
     @endsection
 
     @section('content')
-        
+        <div class="row text-end mb-3">
+            <a href="{{route('playlist.index')}}" class="col-md-4">Back to Playlists</a>
+            <a href="{{route('playlist.edit', ['id' => $playlist->id])}}" class="col-md-8" >Rename</a>
+        </div>
         @if(!$playlistDetails->isEmpty())
-            <a href="{{route('playlist.index')}}" class="d-block mb-3">Back to Playlists</a>
             <p>Total Tracks: {{$playlistDetails->count()}}</p>
             <table class="table table-striped">
                 <thead>
@@ -33,7 +35,6 @@
                 </tbody>
             </table>
         @else
-            <a href="{{route('playlist.index')}}" class="d-block mb-3">Back to Playlists</a>
             <p>No tracks found for Playlist {{$playlist->id}} </p>
         @endif 
         
