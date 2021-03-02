@@ -13,9 +13,11 @@ class AlbumController extends Controller
 
     public function eloquent_index(){
 
-        $albums = Album::with(['artist'])
-                ->orderBy("title")
-                ->get();
+        $albums = Album::with('artist')
+                        ->join('artists', 'artists.id', '=', 'albums.artist_id')
+                        ->orderBy('artists.name')
+                        ->orderBy('title')
+                        ->get();
 
         return view('album.eloquent.index', [
             'albums' => $albums,
