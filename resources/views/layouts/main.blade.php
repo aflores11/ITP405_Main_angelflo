@@ -13,6 +13,8 @@
             <div class="col-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('album.index')}}">Albums</a>
+                        <a class="nav-link" href="{{route('album.eloquent.index')}}">Albums (eloquent)</a>
                         <a class="nav-link" href="{{route('playlist.index')}}">Playlists</a>
                         <a class="nav-link" href="{{route('track.index')}}">Tracks</a>
                     </li>
