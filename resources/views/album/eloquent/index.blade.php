@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title','Albums')
+@section('title','Albums (Eloquent)')
 
 @section('content')
     <div class="text-end mb-3">
