@@ -18,6 +18,28 @@
                         <a class="nav-link" href="{{route('playlist.index')}}">Playlists</a>
                         <a class="nav-link" href="{{route('track.index')}}">Tracks</a>
                     </li>
+                    @if(Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('profile.index')}}">Profile</a>
+                    </li>
+                    <li>
+                        <form method="post" action="{{ route('auth.logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-link">Logout</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                    </li>
+                    
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('registration.index')}}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('auth.loginForm')}}">Login</a>
+                    </li>
+                @endif
                 </ul>
             </div>
             <div class="col-9">

@@ -3,6 +3,9 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\CustomAuthentication;
+use App\Http\Middleware\AdminPrivilege;
+use App\Http\Middleware\MaintenanceMode;
 
 class Kernel extends HttpKernel
 {
@@ -54,6 +57,9 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'custom-auth' => CustomAuthentication::class, 
+        'maintenance-mode' => \App\Http\Middleware\MainenanceMode::class,
+        'admin-privilege' => \App\Http\Middleware\AdminPrivilege::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

@@ -20,6 +20,11 @@ class PlaylistController extends Controller
         ]);
     }
 
+    public function home(){    
+        
+        return view('layouts.main');
+    }
+
     public function show($id){
         $playlist = DB::table('playlists')
         ->where('id','=',$id)
