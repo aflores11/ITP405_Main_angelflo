@@ -28,7 +28,6 @@ Route::get('/', [PlaylistController::class, 'home'])->name('home');
 
 Route::get('/login',[AuthController::class, 'loginForm'])-> name('auth.loginForm');
 Route::post('/login',[AuthController::class, 'login'])-> name('auth.login');
-Route::view('/admin', 'admin')->name('admin');
 
 Route::middleware(['custom-auth'])->group(function(){
     Route::get('/profile',[ProfileController::class, 'index'])-> name('profile.index');
