@@ -30,7 +30,7 @@ class MainenanceMode
                     return $next($request);
                 }
             }
-            abort(404, 'Website Under Maintenance.');
+            abort(403, 'Website Under Maintenance. Please Come back Later...');
         }
         return $next($request);
     }
