@@ -62,9 +62,11 @@ Route::middleware(['maintenance-mode'])->group(function(){
     Route::get('/register',[RegistrationController::class, 'index'])-> name('registration.index');
     Route::post('/register',[RegistrationController::class, 'register'])-> name('registration.create');
     
-    Route::middleware(['admin-privilege'])->group(function(){
-        Route::get('/admin',[AuthController::class, 'adminPage'])->name('admin');
-        Route::post('/admin', [AuthController::class, 'maintenanceToggle'])->name('maintenanceToggle');
-    });    
+    Route::middleware(['custom-auth'])->group(function(){    
+        Route::middleware(['admin-privilege'])->group(function(){
+            Route::get('/admin',[AuthController::class, 'adminPage'])->name('admin');
+            Route::post('/admin', [AuthController::class, 'maintenanceToggle'])->name('maintenanceToggle');
+        });   
+    }); 
 
 });
