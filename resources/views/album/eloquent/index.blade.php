@@ -14,7 +14,10 @@
                 <th>Album</th>
                 <th>Artist</th>
                 <th>Created By</th>
-                <th>Action</th>
+                @if(Auth::check())
+                    <th>Action</th>
+                @endif
+                
 
             </tr>
         </thead>
@@ -30,11 +33,13 @@
                     <td>
                         {{  $album->user->name }}
                     </td>
-                    <td>
-                        @can('edit', $album)
-                            <a href="{{ route('album.eloquent.edit', ['id' => $album->getID()]) }}">Edit</a>
-                        @endcan
-                    </td>
+                    @if (Auth::check())
+                        <td>
+                            @can('edit', $album)
+                                <a href="{{ route('album.eloquent.edit', ['id' => $album->getID()]) }}">Edit</a>
+                            @endcan
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
