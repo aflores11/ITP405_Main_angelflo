@@ -3,15 +3,19 @@
 @section('title','Albums (Eloquent)')
 
 @section('content')
-    <div class="text-end mb-3">
-        <a href="{{ route('album.eloquent.create') }}">New Album</a>
-    </div>
+    @can('create', App\Models\Album::class)
+        <div class="text-end mb-3">
+            <a href="{{ route('album.eloquent.create') }}">New Album</a>
+        </div>
+    @endcan
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Album</th>
                 <th>Artist</th>
+                <th>Created By</th>
                 <th>Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -24,7 +28,12 @@
                         {{ $album->artist->name}}
                     </td>
                     <td>
-                        <a href="{{ route('album.eloquent.edit', ['id' => $album->id]) }}">Edit</a>
+                        {{  $album->user->name }}
+                    </td>
+                    <td>
+                        @can('edit', $album)
+                            <a href="{{ route('album.eloquent.edit', ['id' => $album->getID()]) }}">Edit</a>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

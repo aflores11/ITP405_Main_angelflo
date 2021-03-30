@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Album;
 use App\Models\Artist;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AlbumController extends Controller
 {
@@ -13,11 +15,20 @@ class AlbumController extends Controller
 
     public function eloquent_index(){
 
-        $albums = Album::with('artist')
-                        ->join('artists', 'artists.id', '=', 'albums.artist_id')
-                        ->orderBy('artists.name')
-                        ->orderBy('title')
-                        ->get();
+        // $albums = Album::with(['artist', 'user'])
+        //                 ->join('artists', 'artists.id', '=', 'albums.artist_id')
+        //                 //->join('users', 'users.id', '=', 'albums.user_id')
+        //                 ->orderBy('artists.name')
+        //                 ->orderBy('title')
+        //                 ->get();
+
+        $albums = Album::select('albums.*')
+            ->with(['artist', 'user'])
+            ->join('artists', 'artists.id', '=', 'albums.artist_id')
+            ->join('users', 'users.id', '=', 'albums.user_id')
+            ->orderBy('artists.name')
+            ->orderBy('title')
+            ->get();                
 
         return view('album.eloquent.index', [
             'albums' => $albums,
@@ -26,8 +37,13 @@ class AlbumController extends Controller
 
     public function eloquent_edit($id){
 
-        $artists = Artist::orderBy('name')->get();
         $album = Album::find($id);
+
+        $this->authorize('edit', $album);
+
+
+        $artists = Artist::orderBy('name')->get();
+        
 
         return view('album.eloquent.edit', [
             'artists' => $artists,
@@ -42,6 +58,7 @@ class AlbumController extends Controller
         ]);
 
         $album = Album::where('id', '=', $id)->first();
+        $this->authorize('edit', $album);
         $album->title = $request->input('title');
         $album->artist_id = $request->input('artist');
         $album->save();
@@ -51,7 +68,7 @@ class AlbumController extends Controller
     }
 
     public function eloquent_create(){
-
+        $this->authorize('create', Album::class);
         $artists = Artist::orderBy('name')->get();
 
         return view('album.eloquent.create', [
@@ -68,6 +85,8 @@ class AlbumController extends Controller
         $album = new Album();
         $album->title = $request->input('title');
         $album->artist_id = $request->input('artist');
+        $userID = Auth::user()->id;
+        $album->user_id = $userID;
         $album->save();
         
         return redirect()->route('album.eloquent.index')

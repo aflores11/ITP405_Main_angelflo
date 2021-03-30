@@ -41,10 +41,12 @@ Route::middleware(['custom-auth'])->group(function(){
 Route::middleware(['maintenance-mode'])->group(function(){
     //using eloquent
     Route::get('/albums', [AlbumController::class, 'eloquent_index'])->name('album.eloquent.index');
-    Route::post('/albums', [AlbumController::class, 'eloquent_store'])->name('album.eloquent.store');
-    Route::get('/albums/{id}/edit', [AlbumController::class, 'eloquent_edit'])->name('album.eloquent.edit');
-    Route::get('/albums/create', [AlbumController::class, 'eloquent_create'])->name('album.eloquent.create');
-    Route::post('/albums/{id}', [AlbumController::class, 'eloquent_update'])->name('album.eloquent.update');
+    Route::middleware(['custom-auth'])->group(function(){
+        Route::get('/albums/{id}/edit', [AlbumController::class, 'eloquent_edit'])->name('album.eloquent.edit');
+        Route::get('/albums/create', [AlbumController::class, 'eloquent_create'])->name('album.eloquent.create');
+        Route::post('/albums/{id}', [AlbumController::class, 'eloquent_update'])->name('album.eloquent.update');
+        Route::post('/albums', [AlbumController::class, 'eloquent_store'])->name('album.eloquent.store');
+    });
 
     // old albums
     Route::get('/albums_old', [AlbumController::class, 'index'])->name('album.index');
@@ -65,4 +67,5 @@ Route::middleware(['maintenance-mode'])->group(function(){
 
     Route::get('/register',[RegistrationController::class, 'index'])-> name('registration.index');
     Route::post('/register',[RegistrationController::class, 'register'])-> name('registration.create');
+
 });
