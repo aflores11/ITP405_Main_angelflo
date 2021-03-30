@@ -28,10 +28,11 @@
                             <button type="submit" class="btn btn-link">Logout</button>
                         </form>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin')}}">Admin</a>
-                    </li>
-                    
+                    @can('viewAdmin', App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                        </li>
+                    @endcan                
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('registration.index')}}">Register</a>

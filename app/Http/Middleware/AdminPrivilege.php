@@ -18,9 +18,7 @@ class AdminPrivilege
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
-        $privilege = Role::where('slug', '=','admin')->first();
-        if($user->role_id == $privilege->id){
+        if(Auth::user()->isAdmin()){
             return $next($request);
         }
         return back()->with('error', 'Not an Admin.');

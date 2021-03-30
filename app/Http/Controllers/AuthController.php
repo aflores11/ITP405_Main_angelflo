@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Configuration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -41,6 +42,8 @@ class AuthController extends Controller
     }
 
     public function adminPage(){
+        $this->authorize('viewAdmin', User::class);
+
         $toggle = Configuration::where('name','=','maintenance-mode')->first();
 
         return view('admin', [

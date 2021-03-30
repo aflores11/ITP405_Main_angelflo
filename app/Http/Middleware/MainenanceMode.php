@@ -22,14 +22,6 @@ class MainenanceMode
     {
         $maintenance = Configuration::where('name','=','maintenance-mode')->first();
         if($maintenance->value){
-            if(Auth::check()){
-                //$user = User::where('id', '=', Auth::id())->first();
-                $user = Auth::user();
-                $privilege = Role::where('slug', '=','admin')->first();
-                if($user->role_id == $privilege->id){
-                    return $next($request);
-                }
-            }
             abort(403, 'Website Under Maintenance. Please Come back Later...');
         }
         return $next($request);
