@@ -6,6 +6,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -35,6 +36,7 @@ Route::middleware(['custom-auth'])->group(function(){
     Route::middleware(['admin-privilege'])->group(function(){
         Route::get('/admin',[AuthController::class, 'adminPage'])->name('admin');
         Route::post('/admin', [AuthController::class, 'maintenanceToggle'])->name('maintenanceToggle');
+        Route::post('/stats', [AuthController::class, 'emailStatsToUsers'])->name('emailStats');
     });  
 });
 

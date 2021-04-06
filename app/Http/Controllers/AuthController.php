@@ -6,6 +6,11 @@ use App\Models\Configuration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Album;
+use App\Models\Playlist;
+use App\Models\Track;
+use App\Jobs\StatsToUsers;
+
 
 class AuthController extends Controller
 {
@@ -49,5 +54,18 @@ class AuthController extends Controller
         return view('admin', [
             'toggle' => $toggle
         ]);
+    }
+
+    public function emailStatsToUsers(){
+        $numOfAlbums = Album::all()->count();
+        $numOfPlaylists = Playlist::all()->count();
+       
+        $milliseconds = Track::sum('milliseconds');
+    
+        StatsToUsers::dispatch($numOfAlbums, $numOfPlaylists, $milliseconds);
+
+        return redirect()->route('admin');
+
+
     }
 }
