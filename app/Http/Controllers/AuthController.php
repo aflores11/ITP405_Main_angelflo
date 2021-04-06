@@ -64,7 +64,7 @@ class AuthController extends Controller
     
         StatsToUsers::dispatch($numOfAlbums, $numOfPlaylists, $milliseconds);
 
-        return redirect()->route('admin');
+        return redirect()->route('admin')->with('success', 'Successfully sent email to all users.');
 
 
     }
